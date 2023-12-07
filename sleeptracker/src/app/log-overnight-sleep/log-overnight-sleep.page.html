@@ -1,0 +1,26 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Log Overnight Sleep
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item>
+      <ion-label position="stacked">Sleep Start</ion-label>
+      <ion-datetime displayFormat="MMM D, YYYY HH:mm" [(ngModel)]="sleepStart" required></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Sleep End</ion-label>
+      <ion-datetime displayFormat="MMM D, YYYY HH:mm" [(ngModel)]="sleepEnd" required></ion-datetime>
+    </ion-item>
+
+    <ion-button expand="full" (click)="logOvernightSleep()">Log Overnight Sleep</ion-button>
+  </ion-list>
+</ion-content>
