@@ -17,6 +17,7 @@ export class HomePage {
 	allSleepData: SleepData[] = [];
 	logTime: string | undefined; // New property to store log time
 	markedDates: Date[] = [];
+	selectedDateSleepData: SleepData[] = [];
 
 	constructor(
 		public sleepService: SleepService,
@@ -56,4 +57,11 @@ export class HomePage {
 		  await modal.present();
 		}
 	}
+
+	onDateClicked(date: Date) {
+		console.log('Date clicked:', date);
+		this.selectedDateSleepData = this.allSleepData.filter(
+		  (sleep: SleepData) => sleep.loggedAt.toDateString() === date.toDateString()
+		);
+	  }
 }

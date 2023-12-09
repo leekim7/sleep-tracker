@@ -7,7 +7,7 @@
   <ion-grid>
     <ion-row *ngFor="let week of monthDays | chunk: 7">
       <ion-col *ngFor="let day of week">
-        <div class="day" (click)="dateClicked(day)">
+        <div class="day" (click)="onClick(day)">
           <div class="day-number">{{ day ? day.getDate() : '' }}</div>
           <div *ngIf="markedDates.includes(day)" class="log-indicator"></div>
         </div>
