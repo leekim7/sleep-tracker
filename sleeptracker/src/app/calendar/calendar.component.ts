@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { format } from 'date-fns';
+import { format, addMonths, subMonths } from 'date-fns';
 import { ChunkPipe } from '../chunk.pipe';
 
 @Component({
@@ -35,7 +35,16 @@ export class CalendarComponent {
       ...Array.from({ length: daysAfterLast }, (_, i) => null),
     ];
   }
-  
+
+  previousMonth() {
+    this.currentDate = subMonths(this.currentDate, 1);
+    this.generateMonthDays();
+  }
+
+  nextMonth() {
+    this.currentDate = addMonths(this.currentDate, 1);
+    this.generateMonthDays();
+  }
 
   isToday(date: Date): boolean {
     const today = new Date();
