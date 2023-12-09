@@ -13,7 +13,7 @@ import { LogSleepinessPageModule } from './log-sleepiness/log-sleepiness.module'
 import { ChunkPipe } from './chunk.pipe';
 
 @NgModule({
-  declarations: [AppComponent, ChunkPipe],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
