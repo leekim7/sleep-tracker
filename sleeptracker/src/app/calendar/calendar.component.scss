@@ -1,0 +1,73 @@
+:host {
+    display: block;
+    width: 100%;
+}
+
+ion-grid {
+    width: 100%;
+    margin: auto;
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+}
+
+.header-row {
+    font-weight: bold;
+    text-align: center;
+}
+  
+.header-col,
+.date-col {
+    text-align: center;
+    padding: 8px;
+}
+
+.date-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.today {
+    background-color: var(--ion-color-primary);
+    color: #fff;
+}
+
+.marked {
+    border: 2px solid var(--ion-color-primary);
+    border-radius: 50%;
+}
+
+.day {
+    position: relative;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &:not(:last-child) {
+        border-right: 1px solid #ddd; //Right of each day box except the last box of row
+    }
+    &:not(:nth-child(-n+7)) {
+        border-bottom: 1px solid #ddd; // Bottom of each day box in the first row
+    }
+
+    .day-number {
+    font-weight: bold;
+    }
+}
+
+.log-indicator {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 6px;
+    height: 6px;
+    background-color: teal;
+    border-radius: 50%;
+}  

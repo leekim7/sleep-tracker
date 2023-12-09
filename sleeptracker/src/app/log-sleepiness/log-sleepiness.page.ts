@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { SleepService } from '../services/sleep.service';
 import { SleepData } from '../data/sleep-data';
 import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
-import { ToastController } from '@ionic/angular';
+import { ToastController, ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-log-sleepiness',
@@ -10,22 +10,24 @@ import { ToastController } from '@ionic/angular';
   styleUrls: ['log-sleepiness.page.scss'],
 })
 export class LogSleepinessPage {
-  sleepStart: string | undefined; // New property to store sleep start time
-	sleepEnd: string | undefined; // New property to store sleep end time
-	sleepinessLevel: number | undefined; // Initialize as undefined
+  sleepStart: string | undefined;
+	sleepEnd: string | undefined; 
+	sleepinessLevel: number | undefined;
 	allSleepData: SleepData[] = [];
-	logTime: string | undefined; // New property to store log time
+	logTime: string | undefined; 
 
 
-	constructor(public sleepService: SleepService, public toastController: ToastController) {
-		this.loadSleepData();  // Initialize data when the page loads
+	constructor(public sleepService: SleepService,
+		public toastController: ToastController,
+		public modalController: ModalController) {
+		this.loadSleepData();
 	}
 
 	ngOnInit() {
 		console.log(this.allSleepData);
 	}
-	// Method to log sleepiness data
-	logSleepiness() {
+
+	async logSleepiness() {
 		if (this.sleepinessLevel !== undefined && this.sleepinessLevel >= 1 && this.sleepinessLevel <= 7) {
 			if (!this.logTime) {
 				this.presentToast('Please select a log time.');
@@ -51,6 +53,7 @@ export class LogSleepinessPage {
 		} else {
 		 	this.presentToast('Invalid sleepiness level. Please select a level between 1 and 7.');
 		}
+		await this.modalController.dismiss();
 	}
   loadSleepData() {
 		this.allSleepData = SleepService.AllSleepData;

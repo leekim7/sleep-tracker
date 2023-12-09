@@ -10,9 +10,10 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LogOvernightSleepPageModule } from './log-overnight-sleep/log-overnight-sleep.module';
 import { LogSleepinessPageModule } from './log-sleepiness/log-sleepiness.module';
+import { ChunkPipe } from './chunk.pipe';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ChunkPipe],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),

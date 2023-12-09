@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { SleepService } from '../services/sleep.service';
 import { SleepData } from '../data/sleep-data';
 import { OvernightSleepData } from '../data/overnight-sleep-data';
-import { ToastController } from '@ionic/angular';
+import { ToastController, ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-log-overnight-sleep',
@@ -17,7 +17,8 @@ export class LogOvernightSleepPage {
 	logTime: string | undefined; // New property to store log time
 
 
-	constructor(public sleepService: SleepService, public toastController: ToastController) {
+	constructor(public sleepService: SleepService, public toastController: ToastController,
+		public modalController: ModalController) {
 		this.loadSleepData();  // Initialize data when the page loads
 	}
 
@@ -36,7 +37,7 @@ export class LogOvernightSleepPage {
 	// 	return SleepService.AllSleepData;
 	// }
 
-	logOvernightSleep() {
+	async logOvernightSleep() {
 		const start = this.sleepStart ? new Date(this.sleepStart) : undefined;
 		const end = this.sleepEnd ? new Date(this.sleepEnd) : undefined;
 		const currentDate = new Date();
@@ -58,6 +59,7 @@ export class LogOvernightSleepPage {
 		this.loadSleepData();
 		this.sleepStart = undefined;
 		this.sleepEnd = undefined;
+		await this.modalController.dismiss();
 		this.presentToast('Overnight sleep logged successfully.');
 	}
 

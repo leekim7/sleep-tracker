@@ -12,6 +12,11 @@
 <ion-content [fullscreen]="true">
   <ion-list>
     <ion-item>
+      <ion-label position="stacked">Log Time</ion-label>
+      <ion-datetime displayFormat="MMM D, YYYY HH:mm" pickerFormat="MMMM D, YYYY HH:mm" [(ngModel)]="logTime" required></ion-datetime>
+    </ion-item>
+
+    <ion-item>
       <ion-label position="stacked">Sleepiness Level</ion-label>
       <ion-select [(ngModel)]="sleepinessLevel" placeholder="Select sleepiness level">
         <ion-select-option value="1">1: Feeling active, vital, alert, or wide awake</ion-select-option>
@@ -23,12 +28,7 @@
         <ion-select-option value="7">7: No longer fighting sleep, sleep onset soon; having dream-like thoughts</ion-select-option>
       </ion-select>
     </ion-item>
-
-    <ion-item>
-      <ion-label position="stacked">Log Time</ion-label>
-      <ion-datetime displayFormat="MMM D, YYYY HH:mm" pickerFormat="MMMM D, YYYY HH:mm" [(ngModel)]="logTime" required></ion-datetime>
-    </ion-item>
-
+    
     <ion-button expand="full" (click)="logSleepiness()">Log Sleepiness</ion-button>
   </ion-list>
 </ion-content>

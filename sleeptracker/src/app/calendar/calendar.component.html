@@ -1,0 +1,17 @@
+<ion-grid>
+  <ion-row class="header-row">
+    <ion-col *ngFor="let day of ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']" class="header-col">
+      {{ day }}
+    </ion-col>
+  </ion-row>
+  <ion-grid>
+    <ion-row *ngFor="let week of monthDays | chunk: 7">
+      <ion-col *ngFor="let day of week">
+        <div class="day" (click)="dateClicked(day)">
+          <div class="day-number">{{ day ? day.getDate() : '' }}</div>
+          <div *ngIf="markedDates.includes(day)" class="log-indicator"></div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>  
+</ion-grid>

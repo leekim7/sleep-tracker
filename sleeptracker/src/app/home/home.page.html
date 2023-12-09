@@ -16,6 +16,8 @@
     </ion-toolbar>
   </ion-header>
 
+  <app-calendar [markedDates]="markedDates" (dateClicked)="onDateClicked($event)"></app-calendar>
+
   <!-- Display Logged Sleep Data -->
   <div *ngIf="allSleepData.length > 0">
     <h2>Logged Sleep Data</h2>
@@ -28,5 +30,10 @@
       </ion-item>
     </ion-list>
   </div>
-  
+
+  <!-- Buttons for Logging Overnight Sleep and Sleepiness -->
+  <div class="log-buttons">
+    <ion-button expand="full" (click)="logAction('overnight-sleep')">Log Overnight Sleep</ion-button>
+    <ion-button expand="full" (click)="logAction('sleepiness')">Log Sleepiness</ion-button>
+  </div>
 </ion-content>
