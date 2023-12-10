@@ -18,19 +18,17 @@
 
   <app-calendar [markedDates]="markedDates" (dateClicked)="onDateClicked($event)"></app-calendar>
 
-  <!-- Display Logged Sleep Data -->
-  <div *ngIf="allSleepData.length > 0">
-    <h2>Logged Sleep Data</h2>
-    <ion-list *ngFor="let sleep of allSleepData">
-      <ion-item>
-        <ion-label>
-          <p class="date">{{ sleep?.dateString() }}</p>
-          <p class="duration">{{ sleep?.summaryString() }}</p>
-        </ion-label>
-      </ion-item>
-    </ion-list>
-  </div>
-
+<!-- Display Sleep Data for Selected Date -->
+<div *ngIf="selectedDateLogs.length > 0">
+  <h2>Sleep Data for {{ selectedDateLogs[0]?.dateString() }}</h2>
+  <ion-list *ngFor="let log of selectedDateLogs">
+    <ion-item>
+      <ion-label>
+        <p class="duration">{{ log?.summaryString() }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</div>
   <!-- Buttons for Logging Overnight Sleep and Sleepiness -->
   <div class="log-buttons">
     <ion-button expand="full" (click)="logAction('overnight-sleep')">Log Overnight Sleep</ion-button>

@@ -47,8 +47,7 @@ export class CalendarComponent {
   }
 
   isToday(date: Date): boolean {
-    const today = new Date();
-    return date.toDateString() === today.toDateString();
+    return date.toDateString() === new Date().toDateString();
   }
 
   isMarked(date: Date): boolean {
@@ -59,5 +58,11 @@ export class CalendarComponent {
     if (date) {
       this.dateClicked.emit(date);
     }
+  }
+
+  isDayWithLogs(date: Date): boolean {
+    return this.markedDates.some(
+      (markedDate) => markedDate.toDateString() === date.toDateString()
+    );
   }
 }

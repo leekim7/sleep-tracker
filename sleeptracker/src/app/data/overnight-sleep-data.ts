@@ -30,4 +30,7 @@ export class OvernightSleepData extends SleepData {
 	getSleepStart(): Date {
 		return this.sleepStart;
 	}
+	  getSleepEnd(): Date {
+		return this.sleepEnd;
+	  }
 }

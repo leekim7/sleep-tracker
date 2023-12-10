@@ -20,7 +20,7 @@
       <ion-col *ngFor="let day of week">
         <div class="day" (click)="onClick(day)">
           <div class="day-number">{{ day ? day.getDate() : '' }}</div>
-          <div *ngIf="markedDates.includes(day)" class="log-indicator"></div>
+          <div *ngIf="isDayWithLogs(day)" class="log-indicator"></div>
         </div>
       </ion-col>
     </ion-row>
