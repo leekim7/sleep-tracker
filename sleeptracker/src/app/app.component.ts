@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
+  title = 'at-alternative-interaction-solution';
   public appPages = [
     { title: 'Home', url: '/home', icon: 'home' },
     { title: 'Log Overnight Sleep', url: '/log-overnight-sleep', icon: 'bed' },

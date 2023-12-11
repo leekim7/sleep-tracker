@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SleepService } from '../services/sleep.service';
 import { SleepData } from '../data/sleep-data';
 import { NavController, ModalController, PopoverController } from '@ionic/angular';
 import { LogOvernightSleepPage } from '../log-overnight-sleep/log-overnight-sleep.page';
 import { LogSleepinessPage } from '../log-sleepiness/log-sleepiness.page';
 import { OvernightSleepData } from '../data/overnight-sleep-data';
+import { PredictionEvent } from '../prediction-event'; 
+import { HandtrackerComponent } from '../handtracker/handtracker.component';
 
 @Component({
   selector: 'app-home',
@@ -19,6 +21,7 @@ export class HomePage {
 	markedDates: Date[] = [];
 	selectedDateLogs: SleepData[] = [];
 	clickedDate: Date | undefined;
+	gesture: string = '';
 
 	constructor(
 		public sleepService: SleepService,
@@ -70,5 +73,26 @@ export class HomePage {
 				return logDate === date.toDateString();
 			}
 		});
+	}
+
+	prediction(event: PredictionEvent){
+		this.gesture = event.getPrediction();
+	}
+
+	onGestureDetected(event: PredictionEvent) {
+		this.gesture = event.getPrediction();
+		console.log('Detected Gesture:', this.gesture);
+	
+		// Handle different gestures here...
+		// You can call the appropriate functions based on the detected gesture.
+		// For example, start a new overnight sleep log for the 'Open Hand' gesture.
+		if (this.gesture === 'Open Hand') {
+		  this.startNewOvernightSleepLog();
+		}
+	}
+
+	startNewOvernightSleepLog() {
+		// Your logic to start a new overnight sleep log goes here
+		console.log('Starting a new overnight sleep log...');
 	}
 }
