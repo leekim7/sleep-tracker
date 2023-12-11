@@ -75,24 +75,50 @@ export class HomePage {
 		});
 	}
 
-	prediction(event: PredictionEvent){
-		this.gesture = event.getPrediction();
-	}
-
-	onGestureDetected(event: PredictionEvent) {
+	async onGestureDetected(event: PredictionEvent) {
 		this.gesture = event.getPrediction();
 		console.log('Detected Gesture:', this.gesture);
-	
-		// Handle different gestures here...
-		// You can call the appropriate functions based on the detected gesture.
-		// For example, start a new overnight sleep log for the 'Open Hand' gesture.
-		if (this.gesture === 'Open Hand') {
-		  this.startNewOvernightSleepLog();
-		}
-	}
 
-	startNewOvernightSleepLog() {
-		// Your logic to start a new overnight sleep log goes here
-		console.log('Starting a new overnight sleep log...');
+		switch (this.gesture) {
+			case 'Open Hand':{
+				// Open modal/popover for logging overnight sleep
+				const modal = await this.modalController.create({
+					component: LogOvernightSleepPage,
+				});
+				console.log('Starting new overnight sleep log');
+				await modal.present();
+				break;
+			}
+		  	case 'Closed Hand':{
+				// Close modal/popover for logging overnight sleep
+				// const event = new KeyboardEvent("keydown",{
+				// 	'key': 'Escape'
+				// });
+				// document.dispatchEvent(event);
+				console.log('Canceling new overnight sleep log');
+				break;
+			}
+			case 'Two Open Hands':{
+				// Open modal/popover for logging sleepiness
+				const modal = await this.modalController.create({
+					component: LogSleepinessPage,
+				});
+				console.log('Starting new sleepiness log');
+				await modal.present();
+				break;
+			}
+			case 'Two Closed Hands':{
+				console.log('Canceling new sleepiness log');
+				break;
+			}
+			case 'Hand Pointing':{
+				console.log('Clicking on the previous date');
+				break;
+			}
+			case 'Two Hands Pointing':{
+				console.log('Clicking on the previous week');
+				break;
+			}
+		}
 	}
 }

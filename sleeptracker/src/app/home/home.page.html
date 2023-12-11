@@ -36,7 +36,7 @@
     <ion-button expand="full" (click)="logAction('sleepiness')">Log Sleepiness</ion-button>
   </div>
   <!-- GESTURES -->
-  <app-handtracker (onPrediction)="prediction($event)"></app-handtracker>
+  <app-handtracker (onGestureDetected)="onGestureDetected($event)"></app-handtracker>
 
   <div [innerHTML]="gesture"></div>
   <!-- <div *ngIf="gesture !== ''">
