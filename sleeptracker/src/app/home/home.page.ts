@@ -15,6 +15,7 @@ import { HandtrackerComponent } from '../handtracker/handtracker.component';
 })
 export class HomePage {
 	@ViewChild('calendar') calendar: any;
+	@ViewChild(HandtrackerComponent) handtrackerComponent!: HandtrackerComponent;
 
 	sleepStart: string | undefined;
 	sleepEnd: string | undefined;
@@ -83,7 +84,6 @@ export class HomePage {
 	async onGestureDetected(event: PredictionEvent) {
 		this.gesture = event.getPrediction();
 		console.log('Detected Gesture:', this.gesture);
-
 		let modal: HTMLIonModalElement | undefined;
 	
 		switch (this.gesture) {
@@ -112,10 +112,8 @@ export class HomePage {
 				}
 				break;
 			case 'Hand Pinching':
-				// If handtracker on, stop
-				break;
-			case 'Two Hands Pinching':
-				// If handtracker off, start
+				this.handtrackerComponent.stopDetection();
+				console.log('Stopping hand detection');
 				break;
 		}
 	
@@ -138,17 +136,17 @@ export class HomePage {
 			this.isModalOpen = false;
 		}
 	}
+	
+	// // Method to get the current real-time date
+	// getCurrentRealTimeDate(): Date {
+	// 	return new Date();
+	// }
 
-	// Method to get the current real-time date
-	getCurrentRealTimeDate(): Date {
-		return new Date();
-	}
-
-	// Method to handle gestures for clicking dates
-	handleDateClick(date: Date): void {
-		if (date) {
-			this.calendar.dateClicked.emit(date);
-		}
-		console.log('Clicked on the date:', date);
-	}
+	// // Method to handle gestures for clicking dates
+	// handleDateClick(date: Date): void {
+	// 	if (date) {
+	// 		this.calendar.dateClicked.emit(date);
+	// 	}
+	// 	console.log('Clicked on the date:', date);
+	// }
 }

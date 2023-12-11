@@ -38,7 +38,6 @@
   </div>
 
   <!-- GESTURES -->
-  <app-handtracker [isModalOpen]="isModalOpen" (onGestureDetected)="onGestureDetected($event)"></app-handtracker>
+  <app-handtracker [isModalOpen]="isModalOpen" (onGestureDetected)="onGestureDetected($event)" #handtracker></app-handtracker>
   <div [innerHTML]="gesture"></div>
-  
 </ion-content>
