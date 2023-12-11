@@ -11,23 +11,27 @@ export class OvernightSleepData extends SleepData {
 	}
 
 	override summaryString():string {
+		// Duration
 		var sleepStart_ms = this.sleepStart.getTime();
 		var sleepEnd_ms = this.sleepEnd.getTime();
-
-		// Calculate the difference in milliseconds
 		var difference_ms = sleepEnd_ms - sleepStart_ms;
-		    
 		// Convert to hours and minutes
-		return Math.floor(difference_ms / (1000*60*60)) + " hours, " + Math.floor(difference_ms / (1000*60) % 60) + " minutes.";
+		return "Sleep Duration: " + Math.floor(difference_ms / (1000*60*60)) + " hours, " + Math.floor(difference_ms / (1000*60) % 60) + " minutes";
 	}
 
 	override dateString():string {
-		return "Night of " + this.sleepStart.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+		var sleepStart_ms = this.sleepStart.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+		var sleepEnd_ms = this.sleepEnd.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+		const sleepStartString = this.sleepStart.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }) + ', ' + sleepStart_ms;
+		const sleepEndString = this.sleepEnd.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }) + ', ' + sleepEnd_ms;
+		return  sleepStartString + ' to ' + sleepEndString;
 	}
 
-
-	// Added getter
 	getSleepStart(): Date {
 		return this.sleepStart;
+	}
+
+	getSleepEnd(): Date {
+		return this.sleepEnd;
 	}
 }

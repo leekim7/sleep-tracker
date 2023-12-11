@@ -4,6 +4,7 @@ import { SleepData } from '../data/sleep-data';
 import { NavController, ModalController, PopoverController } from '@ionic/angular';
 import { LogOvernightSleepPage } from '../log-overnight-sleep/log-overnight-sleep.page';
 import { LogSleepinessPage } from '../log-sleepiness/log-sleepiness.page';
+import { OvernightSleepData } from '../data/overnight-sleep-data';
 
 @Component({
   selector: 'app-home',
@@ -11,31 +12,26 @@ import { LogSleepinessPage } from '../log-sleepiness/log-sleepiness.page';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-	sleepStart: string | undefined; // New property to store sleep start time
-	sleepEnd: string | undefined; // New property to store sleep end time
-	sleepinessLevel: number | undefined; // Initialize as undefined
+	sleepStart: string | undefined;
+	sleepEnd: string | undefined;
+	sleepinessLevel: number | undefined;
 	allSleepData: SleepData[] = [];
-	logTime: string | undefined; // New property to store log time
 	markedDates: Date[] = [];
-	selectedDateSleepData: SleepData[] = [];
+	selectedDateLogs: SleepData[] = [];
+	clickedDate: Date | undefined;
 
 	constructor(
 		public sleepService: SleepService,
 		public navCtrl: NavController,
 		public modalController: ModalController,
 		public popoverController: PopoverController
-	  ) {
+	) {
 		this.loadSleepData();
-	  }
+	}
 
 	ngOnInit() {
 		console.log(this.allSleepData);
 	}
-
-	/* Ionic doesn't allow bindings to static variables, so this getter can be used instead. */
-	// get allSleepData() {
-	// 	return SleepService.AllSleepData;
-	// }
 
 	loadSleepData() {
 		this.allSleepData = SleepService.AllSleepData;
@@ -44,24 +40,35 @@ export class HomePage {
 	
 	async logAction(actionType: 'overnight-sleep' | 'sleepiness') {
 		if (actionType === 'overnight-sleep') {
-		  // Open modal/popover for logging overnight sleep
-		  const modal = await this.modalController.create({
+			// Open modal/popover for logging overnight sleep
+			const modal = await this.modalController.create({
 			component: LogOvernightSleepPage,
-		  });
-		  await modal.present();
+		});
+		await modal.present();
 		} else if (actionType === 'sleepiness') {
-		  // Open modal/popover for logging sleepiness
-		  const modal = await this.modalController.create({
+			// Open modal/popover for logging sleepiness
+			const modal = await this.modalController.create({
 			component: LogSleepinessPage,
-		  });
-		  await modal.present();
+		});
+		await modal.present();
 		}
 	}
 
 	onDateClicked(date: Date) {
 		console.log('Date clicked:', date);
-		this.selectedDateSleepData = this.allSleepData.filter(
-		  (sleep: SleepData) => sleep.loggedAt.toDateString() === date.toDateString()
-		);
-	  }
+		this.clickedDate = date;
+		// Filter sleep data for the clicked date
+		this.selectedDateLogs = this.allSleepData.filter((log: SleepData) => {
+			const logDate = log.loggedAt.toDateString();
+			if (log instanceof OvernightSleepData) {
+				// If it's an OvernightSleepData, check both sleepStart and sleepEnd dates
+				const start = log.getSleepStart().toDateString();
+				const end = log.getSleepEnd().toDateString();
+				return start === date.toDateString() || end === date.toDateString();
+			} else {
+				// If it's a regular SleepData, check the loggedAt date
+				return logDate === date.toDateString();
+			}
+		});
+	}
 }
