@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SleepService } from '../services/sleep.service';
 import { SleepData } from '../data/sleep-data';
 import { NavController, ModalController, PopoverController } from '@ionic/angular';
@@ -14,6 +14,8 @@ import { HandtrackerComponent } from '../handtracker/handtracker.component';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+	@ViewChild('calendar') calendar: any;
+
 	sleepStart: string | undefined;
 	sleepEnd: string | undefined;
 	sleepinessLevel: number | undefined;
@@ -22,6 +24,7 @@ export class HomePage {
 	selectedDateLogs: SleepData[] = [];
 	clickedDate: Date | undefined;
 	gesture: string = '';
+	isModalOpen: boolean = false;
 
 	constructor(
 		public sleepService: SleepService,
@@ -42,19 +45,21 @@ export class HomePage {
 	}
 	
 	async logAction(actionType: 'overnight-sleep' | 'sleepiness') {
+		this.isModalOpen = true;
 		if (actionType === 'overnight-sleep') {
 			// Open modal/popover for logging overnight sleep
 			const modal = await this.modalController.create({
 			component: LogOvernightSleepPage,
-		});
-		await modal.present();
+			});
+			await modal.present();
 		} else if (actionType === 'sleepiness') {
 			// Open modal/popover for logging sleepiness
 			const modal = await this.modalController.create({
 			component: LogSleepinessPage,
-		});
-		await modal.present();
+			});
+			await modal.present();
 		}
+		this.isModalOpen = false;
 	}
 
 	onDateClicked(date: Date) {
@@ -79,38 +84,33 @@ export class HomePage {
 		this.gesture = event.getPrediction();
 		console.log('Detected Gesture:', this.gesture);
 
+		let modal: HTMLIonModalElement | undefined;
+	
 		switch (this.gesture) {
-			case 'Open Hand':{
-				// Open modal/popover for logging overnight sleep
-				const modal = await this.modalController.create({
-					component: LogOvernightSleepPage,
-				});
-				console.log('Starting new overnight sleep log');
-				await modal.present();
+			case 'Open Hand':
+				if (!this.isModalOpen) {
+					modal = await this.createAndPresentModal(LogOvernightSleepPage);
+					console.log('Starting a new overnight sleep log');
+				}
 				break;
-			}
-		  	case 'Closed Hand':{
-				// Close modal/popover for logging overnight sleep
-				// const event = new KeyboardEvent("keydown",{
-				// 	'key': 'Escape'
-				// });
-				// document.dispatchEvent(event);
-				console.log('Canceling new overnight sleep log');
+			case 'Closed Hand':
+				if (this.isModalOpen) {
+					await this.dismissModal();
+					console.log('Canceling the overnight sleep log');
+				}
 				break;
-			}
-			case 'Two Open Hands':{
-				// Open modal/popover for logging sleepiness
-				const modal = await this.modalController.create({
-					component: LogSleepinessPage,
-				});
-				console.log('Starting new sleepiness log');
-				await modal.present();
+			case 'Two Open Hands':
+				if (!this.isModalOpen) {
+					modal = await this.createAndPresentModal(LogSleepinessPage);
+					console.log('Starting a new sleepiness log');
+				}
 				break;
-			}
-			case 'Two Closed Hands':{
-				console.log('Canceling new sleepiness log');
+			case 'Two Closed Hands':
+				if (this.isModalOpen) {
+					await this.dismissModal();
+					console.log('Canceling the new sleepiness log');
+				}
 				break;
-			}
 			case 'Hand Pinching':
 				// If handtracker on, stop
 				break;
@@ -118,5 +118,37 @@ export class HomePage {
 				// If handtracker off, start
 				break;
 		}
+	
+		if (modal) {
+			await modal.present();
+		}
+	}
+
+	private async createAndPresentModal(component: any): Promise<HTMLIonModalElement> {
+		const modal = await this.modalController.create({
+			component,
+		});
+		this.isModalOpen = true;
+		return modal;
+	}
+	  
+	private async dismissModal(): Promise<void> {
+		if (this.isModalOpen) {
+			await this.modalController.dismiss();
+			this.isModalOpen = false;
+		}
+	}
+
+	// Method to get the current real-time date
+	getCurrentRealTimeDate(): Date {
+		return new Date();
+	}
+
+	// Method to handle gestures for clicking dates
+	handleDateClick(date: Date): void {
+		if (date) {
+			this.calendar.dateClicked.emit(date);
+		}
+		console.log('Clicked on the date:', date);
 	}
 }
