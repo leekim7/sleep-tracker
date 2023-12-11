@@ -4,7 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      Sleep Tracker
+      GestfulSleep
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -12,34 +12,33 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Sleep Tracker</ion-title>
+      <ion-title size="large">GestfulSleep</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-calendar [markedDates]="markedDates" (dateClicked)="onDateClicked($event)"></app-calendar>
+  <app-calendar [markedDates]="markedDates" (dateClicked)="onDateClicked($event)" #calendar></app-calendar>
 
-<!-- Display Sleep Data for Selected Date -->
-<div *ngIf="selectedDateLogs.length > 0">
-  <h2>Sleep Data for {{ clickedDate?.toDateString() }}</h2>
-  <ion-list *ngFor="let log of selectedDateLogs">
-    <ion-item>
-      <ion-label>
-        <p class="date">{{ log?.dateString() }}</p>
-        <p class="duration">{{ log?.summaryString() }}</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
-</div>
+  <!-- Display Sleep Data for Selected Date -->
+  <div *ngIf="selectedDateLogs.length > 0">
+    <h2>Sleep Data for {{ clickedDate?.toDateString() }}</h2>
+    <ion-list *ngFor="let log of selectedDateLogs">
+      <ion-item>
+        <ion-label>
+          <p class="date">{{ log?.dateString() }}</p>
+          <p class="duration">{{ log?.summaryString() }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
   <!-- Buttons for Logging Overnight Sleep and Sleepiness -->
   <div class="log-buttons">
     <ion-button expand="full" (click)="logAction('overnight-sleep')">Log Overnight Sleep</ion-button>
     <ion-button expand="full" (click)="logAction('sleepiness')">Log Sleepiness</ion-button>
   </div>
-  <!-- GESTURES -->
-  <app-handtracker (onGestureDetected)="onGestureDetected($event)"></app-handtracker>
 
+  <!-- GESTURES -->
+  <app-handtracker [isModalOpen]="isModalOpen" (onGestureDetected)="onGestureDetected($event)"></app-handtracker>
   <div [innerHTML]="gesture"></div>
-  <!-- <div *ngIf="gesture !== ''">
-    <p>Detected Gesture: {{ gesture }}</p>
-  </div> -->
+  
 </ion-content>

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import * as handTrack from 'handtrackjs';
 import { PredictionEvent } from '../prediction-event';
 
@@ -8,6 +8,7 @@ import { PredictionEvent } from '../prediction-event';
   styleUrls: ['./handtracker.component.css']
 })
 export class HandtrackerComponent implements OnInit {
+  @Input() isModalOpen: boolean = false;
   @Output() onGestureDetected = new EventEmitter<PredictionEvent>();
   @ViewChild('htvideo') video: any;
   
@@ -78,6 +79,10 @@ export class HandtrackerComponent implements OnInit {
     to meet your desired set of interactions
   */
   runDetection(){
+    // // Stop detecting gestures if modal is open
+    // if (this.isModalOpen) {
+    //   return;
+    // }
     if (this.model != null){
         let predictions = this.model.detect(this.video.nativeElement).then((predictions: any) => {
             if (predictions.length <= 0) return;
