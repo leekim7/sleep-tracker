@@ -111,14 +111,12 @@ export class HomePage {
 				console.log('Canceling new sleepiness log');
 				break;
 			}
-			case 'Hand Pointing':{
-				console.log('Clicking on the previous date');
+			case 'Hand Pinching':
+				// If handtracker on, stop
 				break;
-			}
-			case 'Two Hands Pointing':{
-				console.log('Clicking on the previous week');
+			case 'Two Hands Pinching':
+				// If handtracker off, start
 				break;
-			}
 		}
 	}
 }
