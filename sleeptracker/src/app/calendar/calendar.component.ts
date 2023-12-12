@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { format } from 'date-fns';
+import { format, addMonths, subMonths } from 'date-fns';
 import { ChunkPipe } from '../chunk.pipe';
 
 @Component({
@@ -43,6 +43,16 @@ export class CalendarComponent {
 
   isMarked(date: Date): boolean {
     return this.markedDates.some((markedDate) => markedDate.toDateString() === date.toDateString());
+  }
+
+  previousMonth() {
+    this.currentDate = subMonths(this.currentDate, 1);
+    this.generateMonthDays();
+  }
+
+  nextMonth() {
+    this.currentDate = addMonths(this.currentDate, 1);
+    this.generateMonthDays();
   }
 
   onClick(date: Date | null): void {

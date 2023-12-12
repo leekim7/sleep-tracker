@@ -1,3 +1,16 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+#htvideo {
+  width: 100%; /* or set a specific width */
+  height: auto; /* Adjust height accordingly */
+}
+
+
 #container {
   text-align: center;
 
