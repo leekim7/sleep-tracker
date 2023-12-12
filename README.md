@@ -2,7 +2,7 @@
 
 1. How many assignment points do you believe you completed (replace the *'s with your numbers)?
 
-*/15
+15/15
 - 5/5 Created a functional web app
 - 2/2 The ability to control the web app with basic gestures
 - 4/4 The ability to control the web app with at least two custom gestures
@@ -19,11 +19,11 @@ https://ionicframework.com/docs/api/modal
 https://ionicframework.com/docs/api/popover
 
 
-5. What classmates or other individuals did you consult as part of this assignment? What did you discuss?
+4. What classmates or other individuals did you consult as part of this assignment? What did you discuss?
 N/A
 
 
-6. Is there anything special we need to know in order to run your code?
+5. Is there anything special we need to know in order to run your code?
 Updated packages.json with the necessary files.
 
 
@@ -35,12 +35,12 @@ We designed the app for the average user who is looking to keep a sleep journal 
 and analyze how sleep affects their alertness.
 
 
-8. Describe the two custom gestures you created.
+7. Describe the two custom gestures you created.
 We customized the pointing gesture to detect which direction the user is pointing to, specifically left or right.
 - Hand Pointing Left: Triggers the calendar to navigate to the first day of the preceding month
 - Hand Pointing Right: Triggers the calendar to navigate to the first day of the following month
 
 
-10. How does your app implement or follow principles of good UI design?
+8. How does your app implement or follow principles of good UI design?
 The color scheme of our app allows for the display setting of the OS that it is running on to change its color scheme.
 For example, the app follows a light color theme with MacOS Light Mode, and a dark color scheme with MacOS Dark Mode.
