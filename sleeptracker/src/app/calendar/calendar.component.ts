@@ -10,6 +10,7 @@ import { ChunkPipe } from '../chunk.pipe';
 export class CalendarComponent {
   @Input() markedDates: Date[] = [];
   @Output() dateClicked = new EventEmitter<Date>();
+  @Output() monthChanged = new EventEmitter<Date>();
 
   currentDate: Date = new Date();
   monthDays: (Date | null)[] = [];
@@ -48,11 +49,13 @@ export class CalendarComponent {
   previousMonth() {
     this.currentDate = subMonths(this.currentDate, 1);
     this.generateMonthDays();
+    this.monthChanged.emit(this.currentDate);
   }
 
   nextMonth() {
     this.currentDate = addMonths(this.currentDate, 1);
     this.generateMonthDays();
+    this.monthChanged.emit(this.currentDate);
   }
 
   onClick(date: Date | null): void {

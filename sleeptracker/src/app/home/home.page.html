@@ -16,7 +16,8 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-calendar [markedDates]="markedDates" (dateClicked)="onDateClicked($event)" #calendar></app-calendar>
+  <app-calendar [markedDates]="markedDates" (dateClicked)="onDateClicked($event)" (monthChanged)="onMonthChanged($event)" #calendar></app-calendar>
+
 
   <h2>Sleep Data for {{ clickedDate.toDateString() }}</h2>
 
