@@ -23,7 +23,7 @@ export class HomePage {
 	allSleepData: SleepData[] = [];
 	markedDates: Date[] = [];
 	selectedDateLogs: SleepData[] = [];
-	clickedDate: Date | undefined;
+	clickedDate: Date = new Date();
 	gesture: string = '';
 	isModalOpen: boolean = false;
 
@@ -34,10 +34,13 @@ export class HomePage {
 		public popoverController: PopoverController
 	) {
 		this.loadSleepData();
+		this.clickedDate = new Date();
 	}
 
 	ngOnInit() {
-		console.log(this.allSleepData);
+		this.loadSleepData();
+		console.log('Selected Date Logs:', this.selectedDateLogs);
+		console.log('Clicked Date:', this.clickedDate);
 	}
 
 	loadSleepData() {
@@ -89,33 +92,44 @@ export class HomePage {
 		switch (this.gesture) {
 			case 'Open Hand':
 				if (!this.isModalOpen) {
-					modal = await this.createAndPresentModal(LogOvernightSleepPage);
 					console.log('Starting a new overnight sleep log');
+					modal = await this.createAndPresentModal(LogOvernightSleepPage);
 				}
 				break;
 			case 'Closed Hand':
 				if (this.isModalOpen) {
-					await this.dismissModal();
 					console.log('Canceling the overnight sleep log');
+					await this.dismissModal();
 				}
 				break;
 			case 'Two Open Hands':
 				if (!this.isModalOpen) {
-					modal = await this.createAndPresentModal(LogSleepinessPage);
 					console.log('Starting a new sleepiness log');
+					modal = await this.createAndPresentModal(LogSleepinessPage);
 				}
 				break;
 			case 'Two Closed Hands':
 				if (this.isModalOpen) {
-					await this.dismissModal();
 					console.log('Canceling the new sleepiness log');
+					await this.dismissModal();
 				}
 				break;
 			case 'Hand Pinching':
-				this.handtrackerComponent.stopDetection();
 				console.log('Stopping hand detection');
+				this.handtrackerComponent.stopDetection();
+				break;
+			case 'Hand Palm Up':
+				console.log('Navigating to following month');
+				this.calendar.onClick(new Date(this.clickedDate.getFullYear(), this.clickedDate.getMonth() + 1, 1));
+				break;
+			case 'Hand Palm Down':
+				console.log('Navigating to preceding month');
+				this.calendar.onClick(new Date(this.clickedDate.getFullYear(), this.clickedDate.getMonth() - 1, 1));
 				break;
 		}
+
+		// Reset the gesture display after handling
+		this.gesture = '';
 	
 		if (modal) {
 			await modal.present();
@@ -136,17 +150,4 @@ export class HomePage {
 			this.isModalOpen = false;
 		}
 	}
-	
-	// // Method to get the current real-time date
-	// getCurrentRealTimeDate(): Date {
-	// 	return new Date();
-	// }
-
-	// // Method to handle gestures for clicking dates
-	// handleDateClick(date: Date): void {
-	// 	if (date) {
-	// 		this.calendar.dateClicked.emit(date);
-	// 	}
-	// 	console.log('Clicked on the date:', date);
-	// }
 }

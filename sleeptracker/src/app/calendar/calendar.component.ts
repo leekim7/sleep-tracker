@@ -48,6 +48,8 @@ export class CalendarComponent {
   onClick(date: Date | null): void {
     if (date) {
       this.dateClicked.emit(date);
+      this.currentDate = date;
+      // this.generateMonthDays();
     }
   }
 }
