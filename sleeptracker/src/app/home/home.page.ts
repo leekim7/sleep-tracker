@@ -91,38 +91,30 @@ export class HomePage {
 	
 		switch (this.gesture) {
 			case 'Open Hand':
-				if (!this.isModalOpen) {
-					console.log('Starting a new overnight sleep log');
-					modal = await this.createAndPresentModal(LogOvernightSleepPage);
-				}
+				console.log('Starting a new overnight sleep log');
+				modal = await this.createAndPresentModal(LogOvernightSleepPage);
 				break;
 			case 'Closed Hand':
-				if (this.isModalOpen) {
-					console.log('Canceling the overnight sleep log');
-					await this.dismissModal();
-				}
+				console.log('Canceling the overnight sleep log');
+				await this.dismissModal();
 				break;
 			case 'Two Open Hands':
-				if (!this.isModalOpen) {
-					console.log('Starting a new sleepiness log');
-					modal = await this.createAndPresentModal(LogSleepinessPage);
-				}
+				console.log('Starting a new sleepiness log');
+				modal = await this.createAndPresentModal(LogSleepinessPage);
 				break;
 			case 'Two Closed Hands':
-				if (this.isModalOpen) {
-					console.log('Canceling the new sleepiness log');
-					await this.dismissModal();
-				}
+				console.log('Canceling the new sleepiness log');
+				await this.dismissModal();
 				break;
 			case 'Hand Pinching':
 				console.log('Stopping hand detection');
 				this.handtrackerComponent.stopDetection();
 				break;
-			case 'Hand Palm Up':
+			case 'Hand Pointing Right':
 				console.log('Navigating to following month');
 				this.calendar.onClick(new Date(this.clickedDate.getFullYear(), this.clickedDate.getMonth() + 1, 1));
 				break;
-			case 'Hand Palm Down':
+			case 'Hand Pointing Left':
 				console.log('Navigating to preceding month');
 				this.calendar.onClick(new Date(this.clickedDate.getFullYear(), this.clickedDate.getMonth() - 1, 1));
 				break;

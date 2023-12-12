@@ -55,6 +55,7 @@ export class LogSleepinessPage {
 		}
 		await this.modalController.dismiss();
 	}
+	
   loadSleepData() {
 		this.allSleepData = SleepService.AllSleepData;
 	}
