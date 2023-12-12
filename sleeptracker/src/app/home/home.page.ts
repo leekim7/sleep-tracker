@@ -34,7 +34,6 @@ export class HomePage {
 		public popoverController: PopoverController
 	) {
 		this.loadSleepData();
-		this.clickedDate = new Date();
 	}
 
 	ngOnInit() {
@@ -69,6 +68,7 @@ export class HomePage {
 	onDateClicked(date: Date) {
 		console.log('Date clicked:', date);
 		this.clickedDate = date;
+		
 		// Filter sleep data for the clicked date
 		this.selectedDateLogs = this.allSleepData.filter((log: SleepData) => {
 			const logDate = log.loggedAt.toDateString();
@@ -148,4 +148,9 @@ export class HomePage {
 			this.isModalOpen = false;
 		}
 	}
+	onMonthChanged(newMonth: Date) {
+		// Update clickedDate to the first day of the new month
+		this.clickedDate = new Date(newMonth.getFullYear(), newMonth.getMonth(), 1);
+		this.onDateClicked(this.clickedDate); // Trigger the logic for the selected date
+	  }
 }

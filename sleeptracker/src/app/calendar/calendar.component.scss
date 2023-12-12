@@ -3,6 +3,17 @@
     width: 100%;
 }
 
+.clicked-date {
+  background-color: #3880ff; /* Change this to the color you prefer */
+  color: #fff; /* Text color for better visibility, adjust as needed */
+  border-radius: 50%; /* Optional: Add a border-radius for a circular look */
+}
+
+.today {
+  border: 2px solid red; /* Red border for today's date */
+  border-radius: 50%;
+}
+
 ion-grid {
     width: 100%;
     margin: auto;

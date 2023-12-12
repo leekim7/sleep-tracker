@@ -9,7 +9,7 @@
 <ion-content [fullscreen]="true">
   <!-- CALENDAR -->
   <div class="calendar-section">
-    <app-calendar [markedDates]="markedDates" (dateClicked)="onDateClicked($event)" #calendar></app-calendar>
+    <app-calendar [markedDates]="markedDates" (dateClicked)="onDateClicked($event)" (monthChanged)="onMonthChanged($event)" #calendar></app-calendar>
   </div>
 
   <!-- INFORMATION -->
