@@ -28,11 +28,15 @@ export class LogSleepinessPage {
 	}
 
 	async logSleepiness() {
+
+		if (!this.logTime) {
+			this.presentToast('Please select a log time.');
+			return;
+		  }
+		const logDateTime = new Date(this.logTime);
+    	const logTime = logDateTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
 		if (this.sleepinessLevel !== undefined && this.sleepinessLevel >= 1 && this.sleepinessLevel <= 7) {
-			if (!this.logTime) {
-				this.presentToast('Please select a log time.');
-				return;
-			}
 			const logDateTime = new Date(this.logTime);
 			const currentDate = new Date();
 			if (logDateTime > currentDate) {
@@ -44,7 +48,7 @@ export class LogSleepinessPage {
 				return;
 			}
 
-			const sleepinessData = new StanfordSleepinessData(this.sleepinessLevel, logDateTime);
+			const sleepinessData = new StanfordSleepinessData(this.sleepinessLevel, logTime, logDateTime);
 			this.sleepService.logSleepinessData(sleepinessData);
 			this.loadSleepData();
 			this.sleepinessLevel = undefined;

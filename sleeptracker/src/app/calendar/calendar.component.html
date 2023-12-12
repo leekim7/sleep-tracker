@@ -1,13 +1,13 @@
 <ion-grid>
   <ion-row class="header-row">
     <ion-col>
-      <button ion-button (click)="previousMonth()">&#9664;</button>
+      <button ion-button class="transparent-button" (click)="previousMonth()">&#9664;</button>
     </ion-col>
     <ion-col col-5>
       <div class="month-title">{{ currentDate | date: 'MMMM yyyy' }}</div>
     </ion-col>
     <ion-col>
-      <button ion-button (click)="nextMonth()">&#9654;</button>
+      <button ion-button class="transparent-button" (click)="nextMonth()">&#9654;</button>
     </ion-col>
   </ion-row>
   <ion-row class="header-row">

@@ -1,46 +1,43 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>
+    <ion-title class="title-center">
       GestfulSleep
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">GestfulSleep</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- CALENDAR -->
+  <div class="calendar-section">
+    <app-calendar [markedDates]="markedDates" (dateClicked)="onDateClicked($event)" #calendar></app-calendar>
+  </div>
 
-  <app-calendar [markedDates]="markedDates" (dateClicked)="onDateClicked($event)" #calendar></app-calendar>
-
-  <h2>Sleep Data for {{ clickedDate.toDateString() }}</h2>
-
-  <!-- Display Sleep Data for Selected Date -->
-  <div *ngIf="selectedDateLogs.length > 0">
-    <ion-list *ngFor="let log of selectedDateLogs">
-      <ion-item>
-        <ion-label>
-          <p class="date">{{ log?.dateString() }}</p>
-          <p class="duration">{{ log?.summaryString() }}</p>
-        </ion-label>
-      </ion-item>
-    </ion-list>
+  <!-- INFORMATION -->
+  <div class="information-section">
+    <h2>{{ clickedDate.toDateString() }}</h2>
+    <div *ngIf="selectedDateLogs.length > 0">
+      <ion-list *ngFor="let log of selectedDateLogs">
+        <ion-item>
+          <ion-label>
+            <p class="date">{{ log?.dateString() }}</p>
+            <p class="duration">{{ log?.summaryString() }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
   </div>
 
   <!-- Buttons for Logging Overnight Sleep and Sleepiness -->
-  <div class="log-buttons">
+  <div class="log-buttons-section">
     <ion-button expand="full" (click)="logAction('overnight-sleep')">Log Overnight Sleep</ion-button>
     <ion-button expand="full" (click)="logAction('sleepiness')">Log Sleepiness</ion-button>
   </div>
 
   <!-- GESTURES -->
-  <div class="handtracker-container">
-    <app-handtracker [isModalOpen]="isModalOpen" (onGestureDetected)="onGestureDetected($event)" #handtracker></app-handtracker>
-    <div [innerHTML]="gesture"></div>
+  <div class="gestures-section">
+    <div class="handtracker-container">
+      <app-handtracker [isModalOpen]="isModalOpen" (onGestureDetected)="onGestureDetected($event)" #handtracker></app-handtracker>
+      <div [innerHTML]="gesture"></div>
+    </div>
   </div>
 </ion-content>

@@ -37,9 +37,9 @@ and analyze how sleep affects their alertness.
 
 7. Describe the two custom gestures you created.
 We customized the pointing gesture to detect which direction the user is pointing to, specifically left or right.
+The actions triggered by our gestures are intuitive enough for users to remember after reading the description.
 - Hand Pointing Left: Triggers the calendar to navigate to the first day of the preceding month
 - Hand Pointing Right: Triggers the calendar to navigate to the first day of the following month
-
 
 8. How does your app implement or follow principles of good UI design?
 The color scheme of our app allows for the display setting of the OS that it is running on to change its color scheme.

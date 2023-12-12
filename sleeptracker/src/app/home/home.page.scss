@@ -5,6 +5,13 @@
   height: 100%;
 }
 
+.title-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
 #htvideo {
   width: 100%; /* or set a specific width */
   height: auto; /* Adjust height accordingly */
@@ -46,4 +53,22 @@
 .duration {
   font-size: 16px;
   margin-top: 5px;
+}
+
+ion-content {
+  padding: 20px;
+  .calendar-section,
+  .information-section,
+  .log-buttons-section,
+  .gestures-section {
+    border: 1px #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  border: 1px solid transparent;
+}
+
+.log-buttons {
+  display: flex;
+  justify-content: space-around;
 }

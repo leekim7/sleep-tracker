@@ -90,37 +90,43 @@ export class HomePage {
 		let modal: HTMLIonModalElement | undefined;
 	
 		switch (this.gesture) {
+			// Open Hand: Trigger modal for new overnight sleep log
 			case 'Open Hand':
 				console.log('Starting a new overnight sleep log');
 				modal = await this.createAndPresentModal(LogOvernightSleepPage);
 				break;
+			// Closed Hand: Close modal for new overnight sleep log
 			case 'Closed Hand':
 				console.log('Canceling the overnight sleep log');
 				await this.dismissModal();
 				break;
+			// Two Open Hands: Trigger modal for new sleepiness log
 			case 'Two Open Hands':
 				console.log('Starting a new sleepiness log');
 				modal = await this.createAndPresentModal(LogSleepinessPage);
 				break;
+			// Two Closed Hands: Close modal for new sleepiness log
 			case 'Two Closed Hands':
 				console.log('Canceling the new sleepiness log');
 				await this.dismissModal();
 				break;
+			// Hand Pinching: Stop hand tracker
 			case 'Hand Pinching':
 				console.log('Stopping hand detection');
 				this.handtrackerComponent.stopDetection();
 				break;
+			// Hand Pointing Right: Navigate to the first day of the following month
 			case 'Hand Pointing Right':
 				console.log('Navigating to following month');
 				this.calendar.onClick(new Date(this.clickedDate.getFullYear(), this.clickedDate.getMonth() + 1, 1));
 				break;
+			// Hand Pointing Left: Navigate to the first day of the preceding month
 			case 'Hand Pointing Left':
 				console.log('Navigating to preceding month');
 				this.calendar.onClick(new Date(this.clickedDate.getFullYear(), this.clickedDate.getMonth() - 1, 1));
 				break;
 		}
 
-		// Reset the gesture display after handling
 		this.gesture = '';
 	
 		if (modal) {
